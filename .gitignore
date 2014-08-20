@@ -1,0 +1,4 @@
+platforms/
+www/Web.config
+web/App_Data/PublishProfiles/winjsstocks - FTP.pubxml
+web/App_Data/PublishProfiles/winjsstocks - Web Deploy.pubxml

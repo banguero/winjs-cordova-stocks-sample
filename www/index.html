@@ -1,0 +1,135 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <title>Stocks</title>
+
+    <!-- WinJS references -->
+    <link href="winjs/css/ui-dark.css" rel="stylesheet" />
+    <script src="winjs/js/WinJS.js"></script>
+
+    <!-- Stocks references -->
+    <link href="css/default.css" rel="stylesheet" />
+    <script src="js/canvasChart.js"></script>
+    <script src="js/contentDialog.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/watchlistTab.js"></script>
+    <script src="js/newsTab.js"></script>
+    <script src="js/marketsTab.js"></script>
+    <script src="js/default.js"></script>
+
+    <script src="cordova.js"></script>
+</head>
+    <body role="application">
+        <div class="appPivot" data-win-control="WinJS.UI.Pivot" data-win-options="{ title: 'Stocks' }">
+            <div class="watchlistTab" data-win-control="WinJS.UI.PivotItem" data-win-options="{ header: 'watchlist' }">
+                <div class="watchlistItemTemplate" data-win-control="WinJS.Binding.Template">
+                    <div class="item">
+                        <div class="nameLabel" data-win-bind="textContent: stockName"></div>
+                        <div class="chart">
+                            <canvas data-win-control="Stocks.Controls.CanvasChart" width="180" height="120"
+                                    data-win-options="{ dateAxes: true, graphBGColor: Stocks.CanvasChart.graphBGColors.warm, yAxisDecimals: 1, drawShadows: false, gridRows: 4, gridCols: 3 }"
+                                    data-win-bind="winControl.data: chartInfo"></canvas>
+                        </div>
+                        <div class="stockDetails">
+                            <div class="changeLabel">Change</div>
+                            <div class="change" data-win-bind="textContent: changeArrow"></div>
+                            <div class="value changeValue" data-win-bind="textContent: change"></div>
+                            <div class="lastTradeLabel">Last trade</div>
+                            <div class="value lastTrade" data-win-bind="textContent: lastSale"></div>
+                            <div class="percentageLabel">% change</div>
+                            <div class="value percentage" data-win-bind="textContent: percent"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stocksList" data-win-control="WinJS.UI.ListView" data-win-options="{
+                    layout: {type: WinJS.UI.ListLayout, orientation: 'vertical'},
+                    oncontentanimating: Stocks.disableEntranceAnimation,
+                    itemTemplate: select('.watchlistItemTemplate'),
+                    itemDataSource: Stocks.WatchlistTab.list.dataSource,
+                    swipeBehavior: 'none',
+                    selectionMode: 'none',
+                    tapBehavior: 'none',
+                    onselectionchanged: Stocks.WatchlistTab.selectionChangedHandler
+                }">
+                </div>
+            </div>
+
+            <div class="newsTab" data-win-control="WinJS.UI.PivotItem" data-win-options="{ header: 'news' }">
+                <div class="newsItemTemplate" data-win-control="WinJS.Binding.Template">
+                    <div class="itemTitle" data-win-bind="textContent: title"></div>
+                    <div class="itemDescription" data-win-bind="textContent: contentSnippet"></div>
+                </div>
+
+                <div class="newsList"
+                     data-win-control="WinJS.UI.ListView"
+                     data-win-options="{
+                        selectionMode: 'none',
+                        oniteminvoked: Stocks.NewsTab.itemInvoked,
+                        oncontentanimating: Stocks.disableEntranceAnimation,
+                        itemTemplate: select('.newsItemTemplate'),
+                        itemDataSource: Stocks.NewsTab.list.dataSource,
+                        layout:  { type: Stocks.NewsTab.NewsLayout }
+                      }"
+                     aria-label="News">
+                </div>
+            </div>
+
+            <div class="marketsTab" data-win-control="WinJS.UI.PivotItem" data-win-options="{ header: 'markets' }">
+                <div class="marketItemTemplate" data-win-control="WinJS.Binding.Template">
+                    <div class="item">
+                        <div class="nameLabel" data-win-bind="textContent: symbol"></div>
+                        <table class="changeTable">
+                            <tr>
+                                <td class="changeLabel">Change</td>
+                                <td class="changeCell">
+                                    <span class="change" data-win-bind="textContent: changeArrow"></span>
+                                    <span class="value changeValue" data-win-bind="textContent: change"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="lastTradeLabel">Last trade</td>
+                                <td class="value lastTrade" data-win-bind="textContent: value"></td>
+                            </tr>
+                            <tr>
+                                <td class="percentageLabel">% change</td>
+                                <td class="value percentage" data-win-bind="textContent: percent"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="marketsList"
+                     data-win-control="WinJS.UI.ListView"
+                     data-win-options="{
+                        layout: {type: WinJS.UI.GridLayout, orientation: 'vertical'},
+                        selectionMode: 'none',
+                        oniteminvoked: Stocks.MarketsTab.itemInvoked,
+                        itemDataSource: Stocks.MarketsTab.list.dataSource,
+                        itemTemplate: select('.marketItemTemplate'),
+                        oncontentanimating: Stocks.disableEntranceAnimation
+                    }"
+                     aria-label="Markets">
+                </div>
+            </div>
+        </div>
+
+        <div class="addStockDialog" data-win-control="Stocks.Controls.ContentDialog">
+            <div class="label">Enter a symbol (e.g. MSFT)</div>
+            <div class="fullScreenContent">
+                <div class="symbolToAdd" data-win-control="WinJS.UI.SearchBox"></div>
+            </div>
+        </div>
+
+        <div class="appBar" data-win-control="WinJS.UI.AppBar" data-win-options="{sticky:true, closedDisplayMode: 'none'}">
+            <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{label: 'add', id:'plusCmd', icon: 'add', onclick: Stocks.WatchlistTab.showAddDialog }"></button>
+            <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{label: 'list', id:'listCmd', icon: 'list', onclick: Stocks.MarketsTab.viewAsList }"></button>
+            <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{label: 'grid', id:'gridCmd', icon: 'calendarday', onclick: Stocks.MarketsTab.viewAsGrid }"></button>
+            <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{label: 'delete', id:'deleteCmd', icon: 'remove', onclick: Stocks.WatchlistTab.deleteSelected }"></button>
+            <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{label: 'edit', id:'editCmd', icon: 'edit', onclick: Stocks.WatchlistTab.edit }"></button>
+        </div>
+    </body>
+</html>

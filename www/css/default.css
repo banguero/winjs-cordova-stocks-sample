@@ -1,0 +1,324 @@
+﻿html, body {
+    cursor: default;
+    background: transparent url('../images/background.png') top left;
+    background-size: cover;
+    background-color: #49990c;
+    height: 100%;
+}
+
+.win-appbar {
+    background-color: darkgreen;
+    color: #FFFFFF;
+}
+
+/* News Tab Styles */
+
+.newsTab .newsList.win-listview {
+    height: 100%;
+}
+
+.newsTab .newsList.win-listview .win-item {
+    padding: 10px;
+    width:calc(100% - 20px);
+    height:calc(100% - 20px);
+}
+
+.newsTab .newsList.win-listview .win-itembox {
+    background-color: #418c0b;
+}
+
+.newsTab .newsList.win-listview .win-item .itemTitle {
+    font-size: 115%;
+}
+
+.newsTab .newsList.win-listview .win-item .itemDescription {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 95%;
+}
+
+/* Markets Tab Styles */
+
+.marketsTab .marketsList.win-listview {
+    height: calc(100% - 80px);
+}
+
+.marketsTab .marketsList.win-listview > .win-vertical .win-gridlayout {
+    margin:0;
+}
+
+.marketsTab .marketsList.win-listview > .win-vertical .win-gridlayout .win-container {
+    width: 140px;
+    height: 150px;
+    margin-left: 0;
+    margin-top: 0;
+}
+
+html.win-hoverable .marketsTab .marketsList.win-listview > .win-vertical .win-gridlayout .win-container {
+    margin-left: 3px;
+    margin-top: 3px;
+}
+
+.marketsTab .marketsList.win-listview .win-itembox {
+    background-color: #418c0b;
+}
+
+.marketsTab .marketsList .item {
+    padding: 5px;
+    padding-bottom: 20px;
+}
+
+.marketsTab .marketsList .item .changeTable {
+    width: 100%;
+}
+
+.marketsTab .marketsList .item .nameLabel {
+    font-size: 18pt;
+    line-height: 24pt;
+}
+
+.marketsTab .marketsList .item .changeLabel,
+.marketsTab .marketsList .item .change,
+.marketsTab .marketsList .item .lastTradeLabel,
+.marketsTab .marketsList .item .percentageLabel {
+    font-size: 10pt;
+}
+
+.marketsTab .marketsList .item .changeCell {
+    text-align: right;
+}
+.marketsTab .marketsList .item .lastTrade,
+.marketsTab .marketsList .item .percentage,
+.marketsTab .marketsList .item .changeValue {
+    text-align: right;
+    font-size: 10pt;
+}
+
+/* Watchlist tab styles */
+
+.watchlistTab .stocksList {
+    height: calc(100% - 80px);
+}
+
+.watchlistTab .stocksList .win-itembox {
+    background-color:transparent;
+}
+
+.watchlistTab .stocksList .win-container {
+    width: 280px;
+    height: 204px;
+}
+
+.watchlistTab .stocksList .item {
+    padding-bottom:20px;
+    height:190px;
+    margin-left:10px;
+}
+
+.watchlistTab .stocksList .item .nameLabel {
+    font-size:20pt;
+    line-height: 24pt;
+    margin-bottom:10px;
+    margin-top:-6px;
+}
+
+.watchlistTab .stocksList .item .chart {
+    z-index:0;
+    width:180px;
+    float:left;
+}
+
+.watchlistTab .stocksList .item .stockDetails {
+    width:80px;
+    float:left;
+}
+
+.watchlistTab .stocksList .item .changeLabel {
+    font-size: 16pt;
+}
+
+.watchlistTab .stocksList .item .change {
+    font-size:12pt;
+    float:left;
+    margin-top:3px;
+    margin-right:5px;
+}
+
+.watchlistTab .stocksList .item .changeValue {
+    font-size:16pt;
+}
+
+.watchlistTab .stocksList .item .lastTrade {
+    margin-bottom:5px;
+}
+
+.watchlistTab .stocksList .item .percentage {
+    margin-bottom:5px;
+}
+
+.watchlistTab .stocksList.win-listview .win-vertical .win-surface.win-listlayout .win-selected.win-container .win-selectionborder,
+.watchlistTab .stocksList.win-listview .win-vertical .win-surface.win-listlayout .win-selected.win-container .win-selectioncheckmarkbackground,
+.watchlistTab .stocksList.win-listview .win-vertical .win-surface.win-listlayout .win-selected.win-container .win-selectioncheckmark,
+.watchlistTab .stocksList.win-listview .win-surface:not(.win-selectionmode) .win-selected.win-container .win-selectionborder,
+.watchlistTab .stocksList.win-listview .win-surface:not(.win-selectionmode) .win-selected.win-container .win-selectioncheckmarkbackground,
+.watchlistTab .stocksList.win-listview .win-surface:not(.win-selectionmode) .win-selected.win-container .win-selectioncheckmark,
+.watchlistTab .stocksList .win-itemcontainer.win-selected.win-container .win-selectionborder,
+.watchlistTab .stocksList .win-itemcontainer.win-selected.win-container .win-selectioncheckmarkbackground,
+.watchlistTab .stocksList .win-itemcontainer.win-selected.win-container .win-selectioncheckmark {
+    display: none;
+}
+
+.watchlistTab .stocksList .win-selectionmode .win-itemcontainer.win-selected.win-container .win-selectionborder,
+.watchlistTab .stocksList .win-selectionmode .win-itemcontainer.win-selected.win-container .win-selectioncheckmarkbackground,
+.watchlistTab .stocksList .win-selectionmode .win-itemcontainer.win-selected.win-container .win-selectioncheckmark,
+.watchlistTab .stocksList .win-itemcontainer.win-selected.win-container.win-selectionmode .win-selectionborder,
+.watchlistTab .stocksList .win-itemcontainer.win-selected.win-container.win-selectionmode .win-selectioncheckmarkbackground,
+.watchlistTab .stocksList .win-itemcontainer.win-selected.win-container.win-selectionmode .win-selectioncheckmark
+{
+    display: block;
+}
+
+.watchlistTab .stocksList.win-listview .win-vertical .win-surface.win-listlayout .win-itemscontainer {
+    transition: transform cubic-bezier(0.17,0.79,0.215,1.0025) 250ms;
+    -webkit-transition: -webkit-transform cubic-bezier(0.17,0.79,0.215,1.0025) 250ms;
+}
+
+.watchlistTab .stocksList.win-listview .win-vertical .win-surface.win-selectionmode.win-listlayout .win-itemscontainer {
+    transform: translate3d(41px, 0, 0);
+    -webkit-transform: translate3d(41px, 0, 0);
+}
+
+.watchlistTab .stocksList.win-listview.win-rtl .win-vertical .win-surface.win-selectionmode.win-listlayout .win-itemscontainer {
+    transform: translate3d(-41px, 0, 0);
+    -webkit-transform: translate3d(-41px, 0, 0);
+}
+
+.watchlistTab .stocksList.win-listview .win-vertical .win-surface.win-listlayout .win-itemsblock {
+    padding-left: 41px;
+    margin-left: -41px;
+}
+
+.watchlistTab .stocksList.win-listview.win-rtl .win-vertical .win-surface.win-listlayout .win-itemsblock {
+    padding-left: 0;
+    margin-left: 0;
+    padding-right: 41px;
+    margin-right: -41px;
+}
+
+.watchlistTab .stocksList.win-listview .win-vertical .win-surface.win-listlayout .win-container {
+    position: relative;
+}
+
+.watchlistTab .stocksList.win-listview .win-vertical .win-surface.win-selectionmode.win-listlayout .win-container::before {
+    content: "";
+    font-family: "Segoe UI Symbol", "Symbols";
+    font-size: 18px;
+    display: block;
+    margin-top: 12px;
+    height: 21px;
+    width: 21px;
+    padding: 0;
+    border-width:2.5px;
+    border-style:solid;
+    z-index: 5;
+    line-height: 1;
+    text-indent: -2px;
+    position: absolute;
+    left: -26px;
+    top: 0;
+}
+
+.watchlistTab .stocksList.win-listview.win-rtl .win-vertical .win-surface.win-selectionmode.win-listlayout .win-container::before {
+    left: auto;
+    right: -26px;
+}
+
+.watchlistTab .stocksList.win-listview .win-vertical .win-surface.win-selectionmode.win-listlayout .win-container:active::before {
+    transform: scale(0.95);
+    transition: transform 0.2s;
+    -webkit-transform: scale(0.95);
+    -webkit-transition: -webkit-transform 0.2s;
+}
+
+.watchlistTab .stocksList.win-listview .win-vertical .win-surface.win-selectionmode.win-listlayout .win-container.win-selected::before {
+    content: "\E081";
+}
+
+.watchlistTab .stocksList.win-listview .win-vertical .win-surface.win-selectionmode.win-listlayout .win-container.win-selected:active::before {
+    content: "\E081";
+}
+
+.watchlistTab .stocksList .win-selectionmode .win-itemcontainer.win-container .win-itembox::after,
+.watchlistTab .stocksList .win-itemcontainer.win-selectionmode.win-container .win-itembox::after,
+.watchlistTab .stocksList.win-listview .win-horizontal .win-surface.win-listlayout.win-selectionmode .win-itembox:not(.win-nonselectable)::after,
+.watchlistTab .stocksList.win-listview .win-surface.win-selectionmode:not(.win-listlayout) .win-itembox:not(.win-nonselectable)::after {
+    content: "";
+    position: absolute;
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+    pointer-events: none;
+    top: 0px;
+    left: 0px;
+    z-index: 999;
+    border-width:4px;
+    border-style:solid;
+}
+
+/* ContentDialog control styles */
+
+.win-contentdialog {
+    background-color: #49990c;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    width: 100%;
+    display: none;
+}
+
+.win-contentdialog.win-opened {
+    display: block;
+}
+
+.win-contentdialog .win-contentdialog-dialogroot {
+    background-color:#367709;
+    width: 100%;
+}
+
+.win-contentdialog .win-contentdialog-titlespace {
+    font-size: 24pt;
+    font-weight: 600;
+    margin: 21px 32px 15px 24px;
+}
+
+.win-contentdialog .win-contentdialog-contentspace {
+    margin: 24px;
+}
+
+.win-contentdialog .win-contentdialog-commandspace {
+
+    margin: 24px;
+}
+
+.win-contentdialog .win-contentdialog-commandspace.win-collapsed {
+    display: none;
+}
+
+.win-contentdialog .win-contentdialog-command {
+    width: calc(50% - 8px);
+    height: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin: 4px;
+}
+
+/* Add Stocks content dialog */
+
+.addStockDialog .symbolToAdd {
+    width: calc(100% - 20px); 
+    margin-right: 8px;
+}
+
+.addStockDialog .label {
+    font-size: 24px;
+}
