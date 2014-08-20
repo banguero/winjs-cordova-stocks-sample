@@ -6,7 +6,6 @@
     "config_munge": {
         "files": {}
     },
-    "installed_plugins": {
-    },
+    "installed_plugins": {},
     "dependent_plugins": {}
 }

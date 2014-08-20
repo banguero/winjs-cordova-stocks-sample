@@ -13,7 +13,7 @@
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="Fullscreen" value="true"/>
   <preference name="Orientation" value="portrait"/>
-  <preference name="BackgroundColor" value="0x49990cff"/>
+  <preference name="BackgroundColor" value="0x49990c"/>
   <icon src="res/icon.png" />
   <platform name="ios">
     <!-- iOS 7.0+ -->
