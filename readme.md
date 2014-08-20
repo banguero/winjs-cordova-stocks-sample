@@ -1,6 +1,8 @@
 WinJS/Cordova Stocks Sample app
 =============
 
+![image](https://cloud.githubusercontent.com/assets/1873511/3988947/4b1edc9c-28b4-11e4-8dd8-13f610eaab50.png)
+
 A web application sample using Apache Cordova and WinJS.
 
 The following are links to more detailed information for each piece of technology used:
