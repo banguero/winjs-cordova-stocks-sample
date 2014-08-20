@@ -26,5 +26,16 @@ http://www.windowsphone.com/en-us/store/app/stocks/3b5ebd05-af30-4d07-9e7d-9a417
 ## Windows Store 
 http://apps.microsoft.com/windows/en-us/app/stocks-sample/21f746bf-b3d6-4e5d-8445-51f656d0eee7 
  
+# Platforms Tested
+## Nexus 7 (Android)
+![Nexus 7 (Android) - Stocks](https://cloud.githubusercontent.com/assets/1873511/3988791/f2240f96-28b2-11e4-8c63-df3a7a2b6662.png)
+ 
+## iPhone 4s, 5s, iPad
+![iOS - Stocks](https://cloud.githubusercontent.com/assets/1873511/3988822/3203c7aa-28b3-11e4-96ae-f0024ed3ed65.png)
 
+## Windows 8/8.1
+![Windows - Stocks](https://cloud.githubusercontent.com/assets/1873511/3988861/82f0d8a6-28b3-11e4-84f9-a7274cd0fa5e.png)
+
+## Windows Phone 8/8.1
+![Windows Phone - Stocks](https://cloud.githubusercontent.com/assets/1873511/3988886/b6aaa870-28b3-11e4-9b91-1775a69f92e6.png)
 
