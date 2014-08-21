@@ -67769,6 +67769,7 @@ define('WinJS/Controls/AppBar',[
                 },
 
                 _computePositionOffset: function AppBar_computePositionOffset() {
+                    debugger;
                     // Calculates and returns top and bottom offsets for the AppBar element, relative to the top or bottom edge of the visible
                     // document.
                     var positionOffSet = {};
