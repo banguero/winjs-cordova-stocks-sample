@@ -6,9 +6,9 @@
         if (typeof define === 'function' && define.amd) {
             define([], factory);
         } else {
-            global.msWriteProfilerMark && msWriteProfilerMark('WinJS.3.0 3.0.0.winjs.2014.8.20 base.js,StartTM');
+            global.msWriteProfilerMark && msWriteProfilerMark('WinJS.3.0 3.0.0.winjs.2014.8.21 base.js,StartTM');
             factory(global.WinJS);
-            global.msWriteProfilerMark && msWriteProfilerMark('WinJS.3.0 3.0.0.winjs.2014.8.20 base.js,StopTM');
+            global.msWriteProfilerMark && msWriteProfilerMark('WinJS.3.0 3.0.0.winjs.2014.8.21 base.js,StopTM');
         }
     }(function (WinJS) {
 
@@ -4176,7 +4176,7 @@ define('WinJS/Scheduler',[
 
     // Performance.now is not defined in web workers.
     //
-    var now = (_Global.performance && _Global.performance.now.bind(_Global.performance)) || Date.now.bind(Date);
+    var now = (_Global.performance && _Global.performance.now && _Global.performance.now.bind(_Global.performance)) || Date.now.bind(Date);
 
     // Main scheduler pump.
     //
@@ -4974,6 +4974,14 @@ define('WinJS/Core/_BaseUtils',[
 
         _setImmediate: _BaseCoreUtils._setImmediate,
 
+        _requestAnimationFrame: _Global.requestAnimationFrame ? _Global.requestAnimationFrame.bind(_Global) : function (handler) {
+            _Global.setTimeout(handler, 16);
+        },
+
+        _cancelAnimationFrame: _Global.cancelAnimationFrame ? _Global.cancelAnimationFrame.bind(_Global) : function (handle) {
+            _Global.clearTimeout(handle);
+        },
+
         // Allows the browser to finish dispatching its current set of events before running
         // the callback.
         _yieldForEvents: _Global.setImmediate ? _Global.setImmediate.bind(_Global) : function (handler) {
@@ -5018,7 +5026,7 @@ define('WinJS/Core/_BaseUtils',[
         },
 
         _now: function _now() {
-            return (_Global.performance && _Global.performance.now()) || Date.now();
+            return (_Global.performance && _Global.performance.now && _Global.performance.now()) || Date.now();
         },
 
         _traceAsyncOperationStarting: _Trace._traceAsyncOperationStarting,
@@ -6468,11 +6476,11 @@ define('WinJS/Utilities/_ElementUtilities',[
                             element._zoomToDestY = null;
                         } else {
                             setAdjustedScrollPosition(element, initialPos.scrollLeft + t * xFactor, initialPos.scrollTop + t * yFactor);
-                            _Global.requestAnimationFrame(update);
+                            _BaseUtils._requestAnimationFrame(update);
                         }
                     };
 
-                    _Global.requestAnimationFrame(update);
+                    _BaseUtils._requestAnimationFrame(update);
                 }, Scheduler.Priority.high, null, "WinJS.Utilities._zoomTo");
             }
         },

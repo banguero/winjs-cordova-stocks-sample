@@ -6,9 +6,9 @@
         if (typeof define === 'function' && define.amd) {
             define([], factory);
         } else {
-            global.msWriteProfilerMark && msWriteProfilerMark('WinJS.3.0 3.0.0.winjs.2014.8.20 WinJS.js,StartTM');
+            global.msWriteProfilerMark && msWriteProfilerMark('WinJS.3.0 3.0.0.winjs.2014.8.21 WinJS.js,StartTM');
             factory(global.WinJS);
-            global.msWriteProfilerMark && msWriteProfilerMark('WinJS.3.0 3.0.0.winjs.2014.8.20 WinJS.js,StopTM');
+            global.msWriteProfilerMark && msWriteProfilerMark('WinJS.3.0 3.0.0.winjs.2014.8.21 WinJS.js,StopTM');
         }
     }(function (WinJS) {
 
@@ -4176,7 +4176,7 @@ define('WinJS/Scheduler',[
 
     // Performance.now is not defined in web workers.
     //
-    var now = (_Global.performance && _Global.performance.now.bind(_Global.performance)) || Date.now.bind(Date);
+    var now = (_Global.performance && _Global.performance.now && _Global.performance.now.bind(_Global.performance)) || Date.now.bind(Date);
 
     // Main scheduler pump.
     //
@@ -4974,6 +4974,14 @@ define('WinJS/Core/_BaseUtils',[
 
         _setImmediate: _BaseCoreUtils._setImmediate,
 
+        _requestAnimationFrame: _Global.requestAnimationFrame ? _Global.requestAnimationFrame.bind(_Global) : function (handler) {
+            _Global.setTimeout(handler, 16);
+        },
+
+        _cancelAnimationFrame: _Global.cancelAnimationFrame ? _Global.cancelAnimationFrame.bind(_Global) : function (handle) {
+            _Global.clearTimeout(handle);
+        },
+
         // Allows the browser to finish dispatching its current set of events before running
         // the callback.
         _yieldForEvents: _Global.setImmediate ? _Global.setImmediate.bind(_Global) : function (handler) {
@@ -5018,7 +5026,7 @@ define('WinJS/Core/_BaseUtils',[
         },
 
         _now: function _now() {
-            return (_Global.performance && _Global.performance.now()) || Date.now();
+            return (_Global.performance && _Global.performance.now && _Global.performance.now()) || Date.now();
         },
 
         _traceAsyncOperationStarting: _Trace._traceAsyncOperationStarting,
@@ -6468,11 +6476,11 @@ define('WinJS/Utilities/_ElementUtilities',[
                             element._zoomToDestY = null;
                         } else {
                             setAdjustedScrollPosition(element, initialPos.scrollLeft + t * xFactor, initialPos.scrollTop + t * yFactor);
-                            _Global.requestAnimationFrame(update);
+                            _BaseUtils._requestAnimationFrame(update);
                         }
                     };
 
-                    _Global.requestAnimationFrame(update);
+                    _BaseUtils._requestAnimationFrame(update);
                 }, Scheduler.Priority.high, null, "WinJS.Utilities._zoomTo");
             }
         },
@@ -33576,7 +33584,7 @@ define('WinJS/Controls/ItemContainer/_ItemEventsHandler',[
                     function applyUI() {
                         if (that._work.length > 0) {
                             that._flushUIBatches();
-                            that._paintedThisFrame = _Global.requestAnimationFrame(applyUI.bind(that));
+                            that._paintedThisFrame = _BaseUtils._requestAnimationFrame(applyUI.bind(that));
                         } else {
                             that._paintedThisFrame = null;
                         }
@@ -35542,10 +35550,10 @@ define('WinJS/Controls/ListView/_BrowseMode',[
                                             newScrollPos[that.site._scrollProperty] = that.site._viewportScrollPosition + delta;
                                             _ElementUtilities.setScrollPosition(that.site._viewport, newScrollPos);
                                             that._lastDragTimeout = currentTime;
-                                            that._autoScrollFrame = _Global.requestAnimationFrame(nextFrame);
+                                            that._autoScrollFrame = _BaseUtils._requestAnimationFrame(nextFrame);
                                         }
                                     };
-                                    that._autoScrollFrame = _Global.requestAnimationFrame(nextFrame);
+                                    that._autoScrollFrame = _BaseUtils._requestAnimationFrame(nextFrame);
                                 }
                             }, _Constants._AUTOSCROLL_DELAY);
                         }
@@ -38017,7 +38025,7 @@ define('WinJS/Controls/ListView/_Layouts',[
                     }
 
                     if (exports.Layout._debugAnimations) {
-                        _Global.requestAnimationFrame(function () {
+                        _BaseUtils._requestAnimationFrame(function () {
                             startAnimations();
                         });
                     } else {
@@ -38033,7 +38041,7 @@ define('WinJS/Controls/ListView/_Layouts',[
                             // canceled so we shouldn't continue.
                             if (animationSignal) {
                                 if (exports.Layout._debugAnimations) {
-                                    _Global.requestAnimationFrame(function () {
+                                    _BaseUtils._requestAnimationFrame(function () {
                                         nextPhaseCallback();
                                     });
                                 } else {
@@ -38282,7 +38290,7 @@ define('WinJS/Controls/ListView/_Layouts',[
                         site._writeProfilerMark("Animation:prepareReflowedItems,StopTM");
 
                         if (exports.Layout._debugAnimations) {
-                            _Global.requestAnimationFrame(function () {
+                            _BaseUtils._requestAnimationFrame(function () {
                                 directMovePhase(true);
                             });
                         } else {
@@ -47365,7 +47373,7 @@ define('WinJS/Controls/ListView',[
 
                     var currentScrollPosition = this._viewportScrollPosition;
                     if (currentScrollPosition !== this._lastScrollPosition) {
-                        this._pendingScroll = _Global.requestAnimationFrame(this._checkScroller.bind(this));
+                        this._pendingScroll = _BaseUtils._requestAnimationFrame(this._checkScroller.bind(this));
 
                         currentScrollPosition = Math.max(0, currentScrollPosition);
                         var direction =  this._scrollDirection(currentScrollPosition);
@@ -49203,7 +49211,7 @@ define('WinJS/Controls/FlipView/_PageManager',[
                     containerStyle.overflowY = "hidden";
 
                     var that = this;
-                    _Global.requestAnimationFrame(function () {
+                    _BaseUtils._requestAnimationFrame(function () {
                         that._isOrientationChanging = false;
                         that._forEachPage(function (curr) {
                             var currStyle = curr.pageRoot.style;
@@ -61886,7 +61894,7 @@ define('WinJS/Controls/Hub',[
                     this._pendingSectionOnScreen = null;
 
                     if (!this._pendingScrollHandler) {
-                        this._pendingScrollHandler = _Global.requestAnimationFrame(function () {
+                        this._pendingScrollHandler = _BaseUtils._requestAnimationFrame(function () {
                             this._pendingScrollHandler = null;
 
                             if (this._pendingSections) {
@@ -67769,7 +67777,6 @@ define('WinJS/Controls/AppBar',[
                 },
 
                 _computePositionOffset: function AppBar_computePositionOffset() {
-                    debugger;
                     // Calculates and returns top and bottom offsets for the AppBar element, relative to the top or bottom edge of the visible
                     // document.
                     var positionOffSet = {};
@@ -71834,6 +71841,7 @@ define('WinJS/Controls/NavBar/_Container',[
     'exports',
     '../../Core/_Global',
     '../../Core/_Base',
+    '../../Core/_BaseUtils',
     '../../Core/_ErrorFromName',
     '../../Core/_Events',
     '../../Core/_Log',
@@ -71853,7 +71861,7 @@ define('WinJS/Controls/NavBar/_Container',[
     '../AppBar/_Constants',
     '../Repeater',
     './_Command'
-    ], function NavBarContainerInit(exports, _Global, _Base, _ErrorFromName, _Events, _Log, _Resources, _WriteProfilerMark, Animations, _TransitionAnimation, BindingList, ControlProcessor, Navigation, Promise, Scheduler, _Control, _ElementUtilities, _KeyboardBehavior, _UI, _Constants, Repeater, _Command) {
+    ], function NavBarContainerInit(exports, _Global, _Base, _BaseUtils, _ErrorFromName, _Events, _Log, _Resources, _WriteProfilerMark, Animations, _TransitionAnimation, BindingList, ControlProcessor, Navigation, Promise, Scheduler, _Control, _ElementUtilities, _KeyboardBehavior, _UI, _Constants, Repeater, _Command) {
     "use strict";
 
     function nobodyHasFocus() {
@@ -72825,7 +72833,7 @@ define('WinJS/Controls/NavBar/_Container',[
                     this._measured = false;
                     if (!this._checkingScroll) {
                         var that = this;
-                        this._checkingScroll = _Global.requestAnimationFrame(function () {
+                        this._checkingScroll = _BaseUtils._requestAnimationFrame(function () {
                             if (that._disposed) { return; }
                             that._checkingScroll = null;
 

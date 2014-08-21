@@ -3741,7 +3741,7 @@ AppBar
   border: none;
   min-width: 0px;
   display: none;
-  z-index: -1;
+  z-index: 1;
 }
 .win-appbar .win-appbar-invokebutton .win-appbar-ellipsis {
   width: 56px;
@@ -3782,10 +3782,6 @@ AppBar
                This value is dependant on the font-size of the Ellipsis Glyph being 19px and the height of the parent element being 21px */
   bottom: 2px;
 }
-.win-appbar.win-appbar-minimal {
-  padding-right: 60px;
-  width: calc(100% - 60px);
-}
 .win-appbar.win-appbar-minimal .win-appbar-invokebutton {
   display: block;
 }
@@ -3808,11 +3804,6 @@ AppBar commands layout
   -ms-flex-align: start;
   -webkit-align-items: flex-start;
   align-items: flex-start;
-}
-.win-commandlayout.win-appbar-showing,
-.win-commandlayout.win-appbar-shown,
-.win-commandlayout.win-appbar-hiding {
-  min-height: 80px;
 }
 .win-commandlayout .win-primarygroup {
   -ms-flex-order: 2;
@@ -3866,6 +3857,15 @@ AppBar commands layout
   -ms-flex: 0 0 auto;
   -webkit-flex: 0 0 auto;
   flex: 0 0 auto;
+}
+.win-commandlayout.win-appbar-showing,
+.win-commandlayout.win-appbar-shown,
+.win-commandlayout.win-appbar-hiding {
+  min-height: 80px;
+}
+.win-commandlayout.win-appbar-minimal {
+  padding-right: 60px;
+  width: calc(100% - 60px);
 }
 /* CommandsLayout RTL */
 .win-commandlayout:lang(ar),
@@ -4675,14 +4675,14 @@ Settings flyout is light in both themes unless the app explicitly overrides it.
 .win-searchbox {
   white-space: normal;
   position: relative;
-  width: 237px;
+  width: 266px;
+  min-width: 265px;
   height: 28px;
   border-style: solid;
   border-width: 2px;
 }
 .win-searchbox-flyout {
   position: absolute;
-  min-width: 265px;
   width: 100%;
   border-style: solid;
   border-width: 2px 2px 2px 2px;
