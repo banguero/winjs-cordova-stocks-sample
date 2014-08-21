@@ -4641,6 +4641,7 @@ define('WinJS/Core/_BaseUtils',[
         get notSupportedForProcessing() { return "Value is not supported within a declarative processing context, if you want it to be supported mark it using WinJS.Utilities.markSupportedForProcessing. The value was: '{0}'"; }
     };
 
+    var lastRequestAnimationFrame = 0;
     var isPhone = false;
     var validation = false;
     var platform = _Global.navigator.platform;
@@ -4975,7 +4976,13 @@ define('WinJS/Core/_BaseUtils',[
         _setImmediate: _BaseCoreUtils._setImmediate,
 
         _requestAnimationFrame: _Global.requestAnimationFrame ? _Global.requestAnimationFrame.bind(_Global) : function (handler) {
-            _Global.setTimeout(handler, 16);
+            var now = Date.now();
+            var delay = Math.max(0, 16 - (now - lastRequestAnimationFrame));
+            var requestId = _Global.setTimeout(function () {
+                handler(now + delay);
+            }, delay);
+            lastRequestAnimationFrame = now + delay;
+            return requestId;
         },
 
         _cancelAnimationFrame: _Global.cancelAnimationFrame ? _Global.cancelAnimationFrame.bind(_Global) : function (handle) {
