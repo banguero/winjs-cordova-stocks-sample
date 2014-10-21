@@ -17,7 +17,7 @@ Please follow these directions for installing Apache Cordova and the necessary p
 
 #Install from Store
 ## AppStore (iOS)
-http://apps.microsoft.com/windows/en-us/app/stocks-sample/21f746bf-b3d6-4e5d-8445-51f656d0eee7 
+https://itunes.apple.com/us/app/stocks-sample/id899723213?ls=1&mt=8
 
 ## Google Play (Android)
 https://play.google.com/store/apps/details?id=com.buildwinjs.cordova
